@@ -1,18 +1,16 @@
 <?php
+//Connexion base de données
 $dsn = 'mysql:dbname=clash;host=127.0.0.1';
 $user = 'root';
 $password = '';
 
 $connection = new PDO($dsn, $user, $password);
-
 $statement = $connection->prepare("
-    SELECT name,win FROM user;
+    SELECT name,win
+    FROM user
 ");
-
 $statement->execute();
-
 $fruits = $statement->fetchAll();
-$g = __toString($fruits);
 ?>
 
 <!DOCTYPE html>
@@ -24,8 +22,10 @@ $g = __toString($fruits);
 <body>
 <h1>Nom des joueurs</h1>
 <pre>
-            <?php print($g); ?>
-        </pre>
+    <?php for ($i = 0; $i < count($fruits); $i++) {
+        print "\n" . $fruits[$i]['name'] . "\n";
+    } ?>
+    </pre>
 </body>
 </html>
 
