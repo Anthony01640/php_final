@@ -21,11 +21,11 @@ $fruits = $statement->fetchAll();
 </head>
 <body>
 <h1>Nom des joueurs</h1>
-<pre>
-    <?php for ($i = 0; $i < count($fruits); $i++) {
-        print "\n" . $fruits[$i]['name'] . "\n";
-    } ?>
-    </pre>
+<pre><?php for ($i = 0; $i < count($fruits); $i++) {
+        print  $fruits[$i]['name'] . " nombre de matchs gagnés: " . $fruits[$i]['win'] . "\n";
+    }
+    ?>
+</pre>
 </body>
 </html>
 
