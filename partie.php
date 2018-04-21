@@ -23,6 +23,11 @@ if (isset($_POST['pseudo1'])) {
     <link rel="stylesheet" href="css/css.css">
 </head>
 <body>
+<ul class="nav">
+    <li><a href="index.php">Classements</a></li>
+    <li><a href="ajouter.php">Ajouter joueurs</a></li>
+    <li><a href="partie.php">Ajouter parties</a></li>
+</ul>
 <form method="post" action="partie.php">
     Joueur 1:<br>
     <SELECT name="pseudo1" size="1">

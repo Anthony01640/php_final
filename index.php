@@ -11,6 +11,11 @@ require_once('./bdd/bdd_user.php');
     <title>Classement</title>
 </head>
 <body>
+<ul class="nav">
+    <li><a href="index.php">Classements</a></li>
+    <li><a href="ajouter.php">Ajouter joueurs</a></li>
+    <li><a href="partie.php">Ajouter parties</a></li>
+</ul>
 <h1 style="font-family:Helvetica, sans-serif">Classement</h1>
 <div id="flex">
 <pre class="name"><?php for ($i = 0; $i < count($shows); $i++) {
@@ -18,14 +23,6 @@ require_once('./bdd/bdd_user.php');
     }
     ?>
 </pre>
-    <div id="flex_i">
-        <p >
-            <a href="ajouter.php" id="ajou_j">Ajouter joueurs:</a>
-        </p>
-        <p>
-            <a href="partie.php" id="ajou_p">Ajouter parties:</a>
-        </p>
-    </div>
 </div>
 </body>
 </html>
