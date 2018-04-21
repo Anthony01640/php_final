@@ -2,17 +2,16 @@
 require_once(__DIR__ . "/bdd/bdd_user.php");
 require_once(__DIR__ . "/bdd/bdd_match.php");
 
-if (isset($_POST['pseudo1'])) {
-    $statement = $connection->prepare("
-        INSERT INTO match(`id_match`, `id_gagnant`, `id_user1`, `id_user2`)
-        VALUES(NULL, :pseudo1, :pseudo2, :winner)
+
+$statement = $connection->prepare("
+        INSERT INTO `match` (`id_match`, `id_gagnant`, `id_user1`, `id_user2`) VALUES (NULL, :winner, :pseudo1, :pseudo2);
     ");
 
-    $statement->bindValue(':pseudo1', $_POST["pseudo1"]);
-    $statement->bindValue(':pseudo2', $_POST["pseudo2"]);
-    $statement->bindValue(':winner', $_POST["winner"]);
-    $statement->execute();
-}
+$statement->bindValue(':pseudo1', $_POST["pseudo1"]);
+$statement->bindValue(':pseudo2', $_POST["pseudo2"]);
+$statement->bindValue(':winner', $_POST["winner"]);
+$statement->execute();
+echo $_POST["winner"];
 ?>
 <!DOCTYPE html>
 </html>
@@ -29,25 +28,20 @@ if (isset($_POST['pseudo1'])) {
     <li><a href="partie.php">Ajouter parties</a></li>
 </ul>
 <form method="post" action="partie.php">
+    <input type="radio" name="winner" value="pseudo1" checked>
     Joueur 1:<br>
     <SELECT name="pseudo1" size="1">
         <?php for ($i = 0; $i < count($shows); $i++) {
-        echo "<OPTION>" . $shows[$i]['name'];
-        }?>
+            echo "<OPTION>" . $shows[$i]['name'];
+        } ?>
     </SELECT>
     <br>
+    <input type="radio" name="winner" value="pseudo2">
     Joueur 2:<br>
     <SELECT name="pseudo2" size="1">
         <?php for ($i = 0; $i < count($shows); $i++) {
             echo "<OPTION>" . $shows[$i]['name'];
-        }?>
-    </SELECT>
-    <br>
-    Gagnant<br>
-    <SELECT name="winner" size="1">
-        <?php for ($i = 0; $i < count($shows); $i++) {
-            echo "<OPTION>" . $shows[$i]['name'];
-        }?>
+        } ?>
     </SELECT>
     <br>
     <br>
