@@ -2,16 +2,48 @@
 require_once(__DIR__ . "/bdd/bdd_user.php");
 require_once(__DIR__ . "/bdd/bdd_match.php");
 
-
-$statement = $connection->prepare("
+if (isset($_POST['pseudo1'])) {
+    $statement = $connection->prepare("
         INSERT INTO `match` (`id_match`, `id_gagnant`, `id_user1`, `id_user2`) VALUES (NULL, :winner, :pseudo1, :pseudo2);
     ");
 
-$statement->bindValue(':pseudo1', $_POST["pseudo1"]);
-$statement->bindValue(':pseudo2', $_POST["pseudo2"]);
-$statement->bindValue(':winner', $_POST["winner"]);
-$statement->execute();
-echo $_POST["winner"];
+    $statement->bindValue(':pseudo1', $_POST["pseudo1"]);
+    $statement->bindValue(':pseudo2', $_POST["pseudo2"]);
+
+    if ($_POST['winner'] == "pseudo1") {
+        $winner = $_POST['pseudo1'];
+    } else if ($_POST['winner'] == "pseudo2") {
+        $winner = $_POST['pseudo2'];
+    }
+    $statement->bindValue(':winner', $winner);
+    $statement->execute();
+
+    if ($_POST['winner'] == "pseudo1") {
+        $statement = $connection->prepare("
+        UPDATE `user` SET `win` = win +1 WHERE `user`.`name` = :pseudo1
+    ");
+        $statement->bindValue(':pseudo1', $_POST["pseudo1"]);
+        $statement->execute();
+    } else if ($_POST['winner'] == "pseudo2") {
+        $statement = $connection->prepare("
+        UPDATE `user` SET `win` = win +1 WHERE `user`.`name` = :pseudo2
+    ");
+        $statement->bindValue(':pseudo2', $_POST["pseudo2"]);
+        $statement->execute();
+    }
+
+    $statement = $connection->prepare("
+    UPDATE `user` SET `nb_matchs` = nb_matchs+1 WHERE `user`.`name` = :pseudo1
+    ");
+    $statement->bindValue(':pseudo1', $_POST["pseudo1"]);
+    $statement->execute();
+    $statement = $connection->prepare("
+    UPDATE `user` SET `nb_matchs` = nb_matchs+1 WHERE `user`.`name` = :pseudo2
+    ");
+    $statement->bindValue(':pseudo2', $_POST["pseudo2"]);
+    $statement->execute();
+
+}
 ?>
 <!DOCTYPE html>
 </html>
